@@ -34,7 +34,6 @@ const VoterRegistration = () => {
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               id="votername"
-              //   name="votername"
               type="text"
               placeholder="Voter Name"
               {...formik.getFieldProps('votername')}
@@ -53,7 +52,6 @@ const VoterRegistration = () => {
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               id="age"
-              //   name="age"
               type="number"
               placeholder="Age"
               {...formik.getFieldProps('age')}

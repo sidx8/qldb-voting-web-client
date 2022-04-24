@@ -28,9 +28,9 @@ const PartyRegistration = () => {
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               id="partyname"
-              name="partyname"
               type="text"
               placeholder="Party Name"
+              {...formik.getFieldProps('partyname')}
             />
             {formik.touched.partyname && formik.errors.partyname ? (
               <div>{formik.errors.partyname}</div>
@@ -46,9 +46,9 @@ const PartyRegistration = () => {
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               id="candidate"
-              name="candidate"
               type="text"
               placeholder="Candidate Name"
+              {...formik.getFieldProps('candidate')}
             />
             {formik.touched.candidate && formik.errors.candidate ? (
               <div>{formik.errors.candidate}</div>

@@ -5,16 +5,16 @@ const validate = (values) => {
   if (!values.partyname) {
     errors.partyname = 'First name is required'
   } else if (values.partyname.length < 8) {
-    errors.partyname = 'Invalid Party name'
+    errors.partyname = 'Invalid Party name !'
   } else {
     errors.partyname = 'Valid Party name'
   }
 
   //* validating candidate name
   if (!values.candidate) {
-    errors.candidate = 'Last name is required'
+    errors.candidate = 'Last name is required !'
   } else if (values.candidate.length < 2) {
-    errors.candidate = 'Less than 2 word'
+    errors.candidate = 'Less than 2 word !'
   } else {
     errors.candidate = 'Valid Candidate name'
   }
@@ -23,14 +23,14 @@ const validate = (values) => {
   if (!values.votername) {
     errors.votername = 'Voter name is required'
   } else if (values.votername.length < 2) {
-    errors.votername = 'Less than 2 word '
+    errors.votername = 'Less than 2 word !'
   } else {
     errors.votername = 'Valid Candidate name'
   }
 
   //* validating age name
   if (!values.age) {
-    errors.age = 'Age is required'
+    errors.age = 'Age is required !'
   } else if (values.age < 18) {
     errors.age = 'You are not authorized to register'
   } else {
