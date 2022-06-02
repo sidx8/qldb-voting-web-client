@@ -1,28 +1,48 @@
 import { useFormik } from 'formik'
-import validate from '../../validate'
+import { useEffect, useState } from 'react'
 const axios = require('axios')
+import validate from '../../validate'
+
 //* voter registration
 
 const VoterRegistration = () => {
   //* formik hook for handling form
+let eIds=[];
+const [elecid, seteids] = useState([]);
+  useEffect(() => {
+    axios
+      .get('https://fingervoting.herokuapp.com/elections')
+      .then(function (response) {  
+        eIds = response.data;
+        seteids(eIds);
+        console.log("electionIs", eIds)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error)
+      })
+  }, [])
 
   const formik = useFormik({
     initialValues: {
-      voterId: '',
-      votername: '',
+      candidateId: '',
+      electionId: '',
+      name: '',
       age: '',
-      password: '',
+      partyName: '',
     },
     // validate,
     onSubmit: async (values) => {
       axios
-        .post('https://fingervoting.herokuapp.com/createVoter', {
-          voterId: values.voterId,
-          name: values.votername,
+        .post('https://fingervoting.herokuapp.com/createCandidate', {
+          candidateId: values.candidateId,
+          electionId: values.electionId,
+          name: values.name,
           age: values.age,
-          password: values.password,
+          partyName: values.partyName,
         })
         .then(function (response) {
+          formik.resetForm();
           console.log(response)
         })
         .catch(function (error) {
@@ -42,37 +62,58 @@ const VoterRegistration = () => {
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="votername"
+              htmlFor="candidateId"
             >
-              Voter Id
+              Candidate Id
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-              id="votername"
+              id="candidateId"
               type="text"
-              placeholder="Voter ID"
-              {...formik.getFieldProps('voterId')}
+              placeholder="Candidate ID"
+              {...formik.getFieldProps('candidateId')}
             />
-            {formik.touched.voterId && formik.errors.voterId ? (
-              <div>{formik.errors.voterId}</div>
+            {formik.touched.candidateId && formik.errors.candidateId ? (
+              <div>{formik.errors.candidateId}</div>
             ) : null}
           </div>
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="votername"
+              htmlFor="electionId"
             >
-              Voter Name
+              electionId
+            </label>
+            {/* <input
+              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+              id="electionId"
+              type=""
+              placeholder="Election ID"
+              {...formik.getFieldProps('electionId')}
+            /> */}
+            <select id='electionId' value={formik.values.electionId} onChange={formik.handleChange}>
+             {elecid.map((e) =>( <option key={e.electionId} value={e.electionId}>{e.electionName}</option>)) }
+            </select>
+            {formik.touched.electionId && formik.errors.electionId ? (
+              <div>{formik.errors.electionId}</div>
+            ) : null}
+          </div>
+          <div className="mb-4">
+            <label
+              className="mb-2 block text-sm font-bold text-gray-700"
+              htmlFor="name"
+            >
+              Name
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-              id="votername"
+              id="name"
               type="text"
-              placeholder="Voter Name"
-              {...formik.getFieldProps('votername')}
+              placeholder="name"
+              {...formik.getFieldProps('name')}
             />
-            {formik.touched.votername && formik.errors.votername ? (
-              <div>{formik.errors.votername}</div>
+            {formik.touched.name && formik.errors.name ? (
+              <div>{formik.errors.name}</div>
             ) : null}
           </div>
           <div className="mb-4">
@@ -96,16 +137,16 @@ const VoterRegistration = () => {
           <div className="mb-4">
             <label
               className="mb-2 block text-sm font-bold text-gray-700"
-              htmlFor="votername"
+              htmlFor="partyName"
             >
-              Voter Password
+              Party Name
             </label>
             <input
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-              id="Voter Address"
-              type="password"
-              placeholder="Voter Password"
-              {...formik.getFieldProps('password')}
+              id="partyName"
+              type="partyName"
+              placeholder="partyName"
+              {...formik.getFieldProps('partyName')}
             />
             {formik.touched.password && formik.errors.password ? (
               <div>{formik.errors.password}</div>
